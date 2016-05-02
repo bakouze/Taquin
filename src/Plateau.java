@@ -107,5 +107,8 @@ public class Plateau {
 		}
 		return temp;
 	}
+<<<<<<< Upstream, based on branch 'master' of https://github.com/bakouze/Taquin.git
 
+=======
+>>>>>>> d8ab847 c
 }
