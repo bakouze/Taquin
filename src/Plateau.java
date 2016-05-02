@@ -10,6 +10,10 @@ public class Plateau {
 	 */
 	private int[] plateau;
 	
+	/**
+	 * Attribut modelisant les distances de manhattan
+	 */
+	private int[][] dist;
 	
 	/**
 	 * Constructeur par défaut : construit un plateau de taquin résolu
@@ -20,6 +24,16 @@ public class Plateau {
 			pl[i]=i;
 		}
 		this.plateau = pl;
+		int[][] d = {{0,1,2,1,2,3,2,3,4},
+					 {1,0,1,2,1,2,3,2,3},
+					 {2,1,0,3,2,1,4,3,2},
+					 {1,2,3,0,1,2,1,2,3},
+					 {2,1,2,1,0,1,2,1,2},
+					 {3,2,1,2,1,0,3,2,1},
+					 {2,3,4,1,2,3,0,1,2},
+					 {3,2,3,2,1,2,1,0,1},
+					 {4,3,2,3,2,1,2,1,0}};
+		this.dist = d;
 	}
 	
 	/**
