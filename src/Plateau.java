@@ -71,6 +71,41 @@ public class Plateau {
 		}
 	}
 	
+	/**
+	 * return the index of the element a in plateau
+	 * @param a
+	 * @return
+	 */
+	public int getPos(int a){
+		for(int i=0;i<9;i++){
+			if(a==this.plateau[i]){
+				return i;
+			}
+		}
+		System.out.println("erreur getPos");
+		return -1;
+	}
 
+	/**
+	 * return the manhattan distance of the element a
+	 * @param a
+	 * @return
+	 */
+	public int manhattanDistI(int a){
+		int i = this.getPos(a);
+		return this.dist[a][i];
+	}
+	
+	/**
+	 * return the sum of the manhattan distance
+	 * @return
+	 */
+	public int manhattanDist(){
+		int temp = 0;
+		for(int i = 0;i<9;i++){
+			temp += this.manhattanDistI(i);
+		}
+		return temp;
+	}
 
 }
