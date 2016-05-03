@@ -1,3 +1,4 @@
+package main;
 /**
  * Représentation du plateau du jeu de taquin
  * @author guillaume
@@ -9,6 +10,11 @@ public class Plateau {
 	 * Attribut modélisant le plateau physique
 	 */
 	private int[] plateau;
+	
+	/**
+	 * Attribut modelisant l'etat final attendu pour le plateau
+	 */
+	private int[] etatFinal;
 	
 	/**
 	 * Attribut modelisant les distances de manhattan
@@ -24,6 +30,7 @@ public class Plateau {
 			pl[i]=i;
 		}
 		this.plateau = pl;
+		this.etatFinal = pl;
 		int[][] d = {{0,1,2,1,2,3,2,3,4},
 					 {1,0,1,2,1,2,3,2,3},
 					 {2,1,0,3,2,1,4,3,2},
@@ -37,34 +44,38 @@ public class Plateau {
 	}
 	
 	/**
-	 * Constructeur à base de neuf entier qui rempli le plateau de gauche à droite et de haut en bas
+	 * Constructeur à base de deux tableaux de 9 entiers
 	 */
-	public Plateau(int a,int b,int c,int d,int e,int f,int g,int h,int i){
-		int[] pl = new int[9];
-		pl[0]=a;
-		pl[1]=b;
-		pl[2]=c;
-		pl[3]=d;
-		pl[4]=e;
-		pl[5]=f;
-		pl[6]=g;
-		pl[7]=h;
-		pl[8]=i;
+	public Plateau(int[] pl, int[] sol){
 		boolean test = true;
 		for(int j=0;j<9;j++){
 			int temp = pl[j];
-			if(temp<0||temp>8){
+			int tempSol = sol[j];
+			if(temp<0||temp>8||tempSol<0||tempSol>8){
 				test= false;
+				System.out.println("out of bound");
 			}
-			for(int t=j;t<9;t++){
+			for(int t=j+1;t<9;t++){
 				int temp2 = pl[t];
-				if(temp == temp2){
+				int temp2Sol = sol[t];
+				if(temp == temp2||tempSol == temp2Sol){
 					test = false;
 				}
 			}
 		}
 		if(test){
 			this.plateau = pl;
+			this.etatFinal = sol;
+			int[][] d = {{0,1,2,1,2,3,2,3,4},
+					 {1,0,1,2,1,2,3,2,3},
+					 {2,1,0,3,2,1,4,3,2},
+					 {1,2,3,0,1,2,1,2,3},
+					 {2,1,2,1,0,1,2,1,2},
+					 {3,2,1,2,1,0,3,2,1},
+					 {2,3,4,1,2,3,0,1,2},
+					 {3,2,3,2,1,2,1,0,1},
+					 {4,3,2,3,2,1,2,1,0}};
+		this.dist = d;
 		}
 		else{
 			System.out.println("erreur chiffres !");
@@ -76,7 +87,7 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	public int getPos(int a){
+	public int getPosPl(int a){
 		for(int i=0;i<9;i++){
 			if(a==this.plateau[i]){
 				return i;
@@ -85,15 +96,31 @@ public class Plateau {
 		System.out.println("erreur getPos");
 		return -1;
 	}
+	
+	/**
+	 * return the index of the element a in solution
+	 * @param a
+	 * @return
+	 */
+	public int getPosSol(int a){
+		for(int i=0;i<9;i++){
+			if(a==this.etatFinal[i]){
+				return i;
+			}
+		}
+		System.out.println("erreur getPos");
+		return -1;
+	}
 
 	/**
-	 * return the manhattan distance of the element a
+	 * return the manhattan distance of the element a to the element b
 	 * @param a
 	 * @return
 	 */
 	public int manhattanDistI(int a){
-		int i = this.getPos(a);
-		return this.dist[a][i];
+		int i = this.getPosPl(a);
+		int j = this.getPosSol(a);
+		return this.dist[j][i];
 	}
 	
 	/**
@@ -102,13 +129,10 @@ public class Plateau {
 	 */
 	public int manhattanDist(){
 		int temp = 0;
-		for(int i = 0;i<9;i++){
+		for(int i = 1;i<9;i++){
 			temp += this.manhattanDistI(i);
 		}
 		return temp;
 	}
-<<<<<<< Upstream, based on branch 'master' of https://github.com/bakouze/Taquin.git
 
-=======
->>>>>>> d8ab847 c
 }
