@@ -34,10 +34,9 @@ public class Reader {
 	public Reader(String fileName) throws FileNotFoundException{
 		//file reading
 		Scanner sc = new Scanner(new File(fileName));
-	    sc.useDelimiter("");
 	    int[] temp = new int[19];
 	    int i = 0;
-	    while (sc.hasNext()) {
+	    while (sc.hasNextInt()) {
 	    	int a = sc.nextInt();
 	    	temp[i]=a;
 	    	i++;
