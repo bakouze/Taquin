@@ -56,8 +56,31 @@ public class Reader {
 	    for(int j = 10;j<19;j++){
 	    	s[j-10]=temp[j];
 	    }
-	    this.sol=s;
-	    
+	    this.sol=s; 
+	}
+	
+	/**
+	 * Getter for pl attribute
+	 * @return
+	 */
+	public int[] getPlateau(){
+		return this.pl;
+	}
+	
+	/**
+	 * Getter for sol attribute
+	 * @return
+	 */
+	public int[] getSolution(){
+		return this.sol;
+	}
+	
+	/**
+	 * Getter for nb attribute
+	 * @return
+	 */
+	public int getNb(){
+		return this.nb;
 	}
 
 }
