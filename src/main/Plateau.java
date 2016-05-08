@@ -87,7 +87,7 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	public int getPosPl(int a){
+	private int getPosPl(int a){
 		for(int i=0;i<9;i++){
 			if(a==this.plateau[i]){
 				return i;
@@ -102,7 +102,7 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	public int getPosSol(int a){
+	private int getPosSol(int a){
 		for(int i=0;i<9;i++){
 			if(a==this.etatFinal[i]){
 				return i;
@@ -117,7 +117,7 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	public int manhattanDistI(int a){
+	private int manhattanDistI(int a){
 		int i = this.getPosPl(a);
 		int j = this.getPosSol(a);
 		return this.dist[j][i];
@@ -135,4 +135,59 @@ public class Plateau {
 		return temp;
 	}
 
+	//Test de faisabilite
+	/**
+	 * Echange les cases i et j du plateau
+	 * @param i
+	 * @param j
+	 */
+	private void permutation(int i, int j){
+		int temp = this.plateau[i];
+		this.plateau[i]=this.plateau[j];
+		this.plateau[j]=temp;
+	}
+	
+	/**
+	 * Place la case a si elle n'est pas bien place avec une permutation. Renvoie le nombre de permutation necessaire.
+	 * @param a
+	 * @return
+	 */
+	private int placement(int a){
+		if(this.getPosPl(a)!=this.getPosSol(a)){
+			int i = this.getPosPl(a);
+			int j = this.getPosSol(a);
+			this.permutation(i, j);
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+	
+	/**
+	 * Verifie que si le plateau est resolu
+	 * @return
+	 */
+	private boolean estResolu(){
+		boolean test = true;
+		for(int i=0;i<9;i++){
+			test = test && (this.plateau[i]==this.etatFinal[i]);
+		}
+		return test;
+	}
+	
+	/**
+	 * Verifie que le plateau est soluble
+	 * @return
+	 */
+	public boolean estSoluble(){
+		int nbVide = this.manhattanDistI(0);
+		int nbPermutations = 0;
+		int compteur = 1;
+		while(!this.estResolu()){
+			nbPermutations += this.placement(compteur);
+			compteur++;
+		}
+		return ((nbVide%2)==(nbPermutations%2));
+	}
 }
