@@ -190,4 +190,176 @@ public class Plateau {
 		}
 		return ((nbVide%2)==(nbPermutations%2));
 	}
+	
+	//modelisation des deplacements
+	/**
+	 * calcule le nombre de deplacement possible suivant la position de la case vide (0)
+	 * @return
+	 */
+	public int nbDeplacements(){
+		if(this.getPosPl(0)==0||this.getPosPl(0)==2||this.getPosPl(0)==6||this.getPosPl(0)==8){
+			return 2;
+		}
+		else if(this.getPosPl(0)==1||this.getPosPl(0)==3||this.getPosPl(0)==5||this.getPosPl(0)==7){
+			return 3;
+		}
+		else{
+			return 4;
+		}
+	}
+	
+	/**
+	 * Effectue le delacement si possible et renvoie le boolean repondant a : le deplacement a ete effectue ?
+	 * @param s
+	 * @return
+	 */
+	public boolean deplace(String s){
+		Deplacement move = new Deplacement(s);
+		switch (this.getPosPl(0)){
+		case 0:
+			if(move.getInt() == 0){
+				return false;
+			}
+			else if(move.getInt() == 1){
+				return false;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(0, 1);
+				return true;
+			}
+			else{
+				this.permutation(0, 3);
+				return true;
+			}
+		case 1:
+			if(move.getInt() == 0){
+				return false;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(1, 0);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(1, 2);
+				return true;
+			}
+			else{
+				this.permutation(1, 4);
+				return true;
+			}
+		case 2:
+			if(move.getInt() == 0){
+				return false;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(2, 1);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				return false;
+			}
+			else{
+				this.permutation(2, 5);
+				return true;
+			}
+		case 3:
+			if(move.getInt() == 0){
+				this.permutation(3,0);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				return false;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(3, 4);
+				return true;
+			}
+			else{
+				this.permutation(3, 6);
+				return true;
+			}
+		case 4:
+			if(move.getInt() == 0){
+				this.permutation(4, 1);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(4, 3);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(4, 5);
+				return true;
+			}
+			else{
+				this.permutation(4, 7);
+				return true;
+			}
+		case 5:
+			if(move.getInt() == 0){
+				this.permutation(5, 2);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(5, 4);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				return false;
+			}
+			else{
+				this.permutation(5, 8);
+				return true;
+			}
+		case 6:
+			if(move.getInt() == 0){
+				this.permutation(6, 3);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				return false;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(6, 7);
+				return true;
+			}
+			else{
+				return false;
+			}
+		case 7:
+			if(move.getInt() == 0){
+				this.permutation(7, 4);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(7, 6);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				this.permutation(7, 8);
+				return true;
+			}
+			else{
+				return false;
+			}
+		case 8:
+			if(move.getInt() == 0){
+				this.permutation(8, 5);
+				return true;
+			}
+			else if(move.getInt() == 1){
+				this.permutation(8, 7);
+				return true;
+			}
+			else if(move.getInt() == 2){
+				return false;
+			}
+			else{
+				return false;
+			}
+		default: 
+			return false;
+		}
+		
+	}
 }
