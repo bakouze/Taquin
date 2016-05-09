@@ -83,6 +83,14 @@ public class Plateau {
 	}
 	
 	/**
+	 * getter pour la position actuelle du plateau
+	 * @return
+	 */
+	public int[] getPosition(){
+		return this.plateau;
+	}
+	
+	/**
 	 * return the index of the element a in plateau
 	 * @param a
 	 * @return
@@ -213,7 +221,7 @@ public class Plateau {
 	 * @param s
 	 * @return
 	 */
-	public boolean deplace(String s){
+	public boolean deplaceBool(String s){
 		Deplacement move = new Deplacement(s);
 		switch (this.getPosPl(0)){
 		case 0:
@@ -224,11 +232,9 @@ public class Plateau {
 				return false;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(0, 1);
 				return true;
 			}
 			else{
-				this.permutation(0, 3);
 				return true;
 			}
 		case 1:
@@ -236,15 +242,12 @@ public class Plateau {
 				return false;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(1, 0);
 				return true;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(1, 2);
 				return true;
 			}
 			else{
-				this.permutation(1, 4);
 				return true;
 			}
 		case 2:
@@ -252,75 +255,61 @@ public class Plateau {
 				return false;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(2, 1);
 				return true;
 			}
 			else if(move.getInt() == 2){
 				return false;
 			}
 			else{
-				this.permutation(2, 5);
 				return true;
 			}
 		case 3:
 			if(move.getInt() == 0){
-				this.permutation(3,0);
 				return true;
 			}
 			else if(move.getInt() == 1){
 				return false;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(3, 4);
 				return true;
 			}
 			else{
-				this.permutation(3, 6);
 				return true;
 			}
 		case 4:
 			if(move.getInt() == 0){
-				this.permutation(4, 1);
 				return true;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(4, 3);
 				return true;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(4, 5);
 				return true;
 			}
 			else{
-				this.permutation(4, 7);
 				return true;
 			}
 		case 5:
 			if(move.getInt() == 0){
-				this.permutation(5, 2);
 				return true;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(5, 4);
 				return true;
 			}
 			else if(move.getInt() == 2){
 				return false;
 			}
 			else{
-				this.permutation(5, 8);
 				return true;
 			}
 		case 6:
 			if(move.getInt() == 0){
-				this.permutation(6, 3);
 				return true;
 			}
 			else if(move.getInt() == 1){
 				return false;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(6, 7);
 				return true;
 			}
 			else{
@@ -328,15 +317,12 @@ public class Plateau {
 			}
 		case 7:
 			if(move.getInt() == 0){
-				this.permutation(7, 4);
 				return true;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(7, 6);
 				return true;
 			}
 			else if(move.getInt() == 2){
-				this.permutation(7, 8);
 				return true;
 			}
 			else{
@@ -344,11 +330,9 @@ public class Plateau {
 			}
 		case 8:
 			if(move.getInt() == 0){
-				this.permutation(8, 5);
 				return true;
 			}
 			else if(move.getInt() == 1){
-				this.permutation(8, 7);
 				return true;
 			}
 			else if(move.getInt() == 2){
@@ -360,6 +344,111 @@ public class Plateau {
 		default: 
 			return false;
 		}
-		
+	}
+	
+	
+	public void deplace(String s){
+		Deplacement move = new Deplacement(s);
+		switch (this.getPosPl(0)){
+		case 0:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 2){
+					this.permutation(0, 1);
+				}
+				else{
+					this.permutation(0, 3);
+				}
+			}
+		case 1:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 1){
+					this.permutation(1, 0);
+				}
+				else if(move.getInt() == 2){
+					this.permutation(1, 2);
+				}
+				else{
+					this.permutation(1, 4);
+				}
+			}
+		case 2:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 1){
+					this.permutation(2, 1);
+				}
+				else{
+					this.permutation(2, 5);
+				}
+			}
+		case 3:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(3,0);
+				}
+				else if(move.getInt() == 2){
+					this.permutation(3, 4);
+				}
+				else{
+					this.permutation(3, 6);
+				}
+			}
+		case 4:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(4, 1);
+				}
+				else if(move.getInt() == 1){
+					this.permutation(4, 3);
+				}
+				else if(move.getInt() == 2){
+					this.permutation(4, 5);
+				}
+				else{
+					this.permutation(4, 7);
+				}
+			}
+		case 5:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(5, 2);
+				}
+				else if(move.getInt() == 1){
+					this.permutation(5, 4);
+				}
+				else{
+					this.permutation(5, 8);
+				}
+			}
+		case 6:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(6, 3);
+				}
+				else if(move.getInt() == 2){
+					this.permutation(6, 7);
+				}
+			}
+		case 7:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(7, 4);
+				}
+				else if(move.getInt() == 1){
+					this.permutation(7, 6);
+				}
+				else if(move.getInt() == 2){
+					this.permutation(7, 8);
+				}
+			}
+		case 8:
+			if(this.deplaceBool(s)){
+				if(move.getInt() == 0){
+					this.permutation(8, 5);
+				}
+				else if(move.getInt() == 1){
+					this.permutation(8, 7);
+				}
+			}
+		}	
 	}
 }
