@@ -83,6 +83,18 @@ public class Plateau {
 	}
 	
 	/**
+	 * Transforme une position int[9] en int unique
+	 * @return
+	 */
+	public int intFromPosition(){
+		int res = 0;
+		for (int i = 0; i < 9; i++){
+			res += this.getPosition()[i]*Math.pow(10, i);
+		}
+		return res;
+	}
+	
+	/**
 	 * getter pour la position actuelle du plateau
 	 * @return
 	 */
