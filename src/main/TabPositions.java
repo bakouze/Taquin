@@ -10,6 +10,7 @@ public class TabPositions {
 		this.ht = new HashTable;
 	}
 	
-	public void addPositions(){
+	public void addPositions(Plateau plateau){
+		
 	}
 }

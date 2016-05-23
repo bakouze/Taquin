@@ -498,5 +498,12 @@ public class Plateau {
 			}
 		}	
 	}
+	
+	public int hashSomme(){
+		int somme = 0;
+		for (int i=0; i<this.plateau.length; i++){
+			somme += this.plateau[i]*Math.pow(10, i);
+		}
+	}
 }
 

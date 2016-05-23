@@ -12,6 +12,7 @@ public class FilePriorite {
 	
 	public addPlateau(Plateau plateau){
 		Plateau copie = new Plateau();
+		copie = new Plateau(plateau);
 		
 	}
 
