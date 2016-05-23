@@ -5,22 +5,27 @@ package main;
  *
  */
 public class Plateau {
-	
+
 	/**
 	 * Attribut modélisant le plateau physique
 	 */
 	private int[] plateau;
-	
+
 	/**
 	 * Attribut modelisant l'etat final attendu pour le plateau
 	 */
 	private int[] etatFinal;
-	
+
 	/**
 	 * Attribut modelisant les distances de manhattan
 	 */
 	private int[][] dist;
-	
+
+	/**
+	 * nombre de coups utilis�s pour atteindre ce plateau
+	 */
+	private int profondeur;
+
 	/**
 	 * Constructeur par défaut : construit un plateau de taquin résolu
 	 */
@@ -32,17 +37,33 @@ public class Plateau {
 		this.plateau = pl;
 		this.etatFinal = pl;
 		int[][] d = {{0,1,2,1,2,3,2,3,4},
-					 {1,0,1,2,1,2,3,2,3},
-					 {2,1,0,3,2,1,4,3,2},
-					 {1,2,3,0,1,2,1,2,3},
-					 {2,1,2,1,0,1,2,1,2},
-					 {3,2,1,2,1,0,3,2,1},
-					 {2,3,4,1,2,3,0,1,2},
-					 {3,2,3,2,1,2,1,0,1},
-					 {4,3,2,3,2,1,2,1,0}};
+				{1,0,1,2,1,2,3,2,3},
+				{2,1,0,3,2,1,4,3,2},
+				{1,2,3,0,1,2,1,2,3},
+				{2,1,2,1,0,1,2,1,2},
+				{3,2,1,2,1,0,3,2,1},
+				{2,3,4,1,2,3,0,1,2},
+				{3,2,3,2,1,2,1,0,1},
+				{4,3,2,3,2,1,2,1,0}};
 		this.dist = d;
 	}
-	
+
+	public Plateau(Plateau plateau){
+		int[][] d = {{0,1,2,1,2,3,2,3,4},
+				{1,0,1,2,1,2,3,2,3},
+				{2,1,0,3,2,1,4,3,2},
+				{1,2,3,0,1,2,1,2,3},
+				{2,1,2,1,0,1,2,1,2},
+				{3,2,1,2,1,0,3,2,1},
+				{2,3,4,1,2,3,0,1,2},
+				{3,2,3,2,1,2,1,0,1},
+				{4,3,2,3,2,1,2,1,0}};
+		this.dist = d;
+		this.plateau = plateau.getPosition();
+		this.etatFinal = plateau.getPosFinale();
+		this.profondeur = plateau.getProfondeur();
+	}
+
 	/**
 	 * Constructeur à base de deux tableaux de 9 entiers
 	 */
@@ -67,21 +88,21 @@ public class Plateau {
 			this.plateau = pl;
 			this.etatFinal = sol;
 			int[][] d = {{0,1,2,1,2,3,2,3,4},
-					 {1,0,1,2,1,2,3,2,3},
-					 {2,1,0,3,2,1,4,3,2},
-					 {1,2,3,0,1,2,1,2,3},
-					 {2,1,2,1,0,1,2,1,2},
-					 {3,2,1,2,1,0,3,2,1},
-					 {2,3,4,1,2,3,0,1,2},
-					 {3,2,3,2,1,2,1,0,1},
-					 {4,3,2,3,2,1,2,1,0}};
-		this.dist = d;
+					{1,0,1,2,1,2,3,2,3},
+					{2,1,0,3,2,1,4,3,2},
+					{1,2,3,0,1,2,1,2,3},
+					{2,1,2,1,0,1,2,1,2},
+					{3,2,1,2,1,0,3,2,1},
+					{2,3,4,1,2,3,0,1,2},
+					{3,2,3,2,1,2,1,0,1},
+					{4,3,2,3,2,1,2,1,0}};
+			this.dist = d;
 		}
 		else{
 			System.out.println("erreur chiffres !");
 		}
 	}
-	
+
 	/**
 	 * Transforme une position int[9] en int unique
 	 * @return
@@ -95,6 +116,13 @@ public class Plateau {
 	}
 	
 	/**
+	 * getter pour la profondeur du plateau
+	 */
+	public int getProfondeur(){
+		return this.profondeur;
+	}
+
+	/**
 	 * getter pour la position actuelle du plateau
 	 * @return
 	 */
@@ -102,6 +130,13 @@ public class Plateau {
 		return this.plateau;
 	}
 	
+	/**
+	 * getter pour la position finale du plateau
+	 */
+	public int[] getPosFinale(){
+		return this.etatFinal;
+	}
+
 	/**
 	 * return the index of the element a in plateau
 	 * @param a
@@ -116,7 +151,7 @@ public class Plateau {
 		System.out.println("erreur getPos");
 		return -1;
 	}
-	
+
 	/**
 	 * return the index of the element a in solution
 	 * @param a
@@ -142,7 +177,7 @@ public class Plateau {
 		int j = this.getPosSol(a);
 		return this.dist[j][i];
 	}
-	
+
 	/**
 	 * return the sum of the manhattan distance
 	 * @return
@@ -166,7 +201,7 @@ public class Plateau {
 		this.plateau[i]=this.plateau[j];
 		this.plateau[j]=temp;
 	}
-	
+
 	/**
 	 * Place la case a si elle n'est pas bien place avec une permutation. Renvoie le nombre de permutation necessaire.
 	 * @param a
@@ -183,7 +218,7 @@ public class Plateau {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Verifie que si le plateau est resolu
 	 * @return
@@ -195,7 +230,7 @@ public class Plateau {
 		}
 		return test;
 	}
-	
+
 	/**
 	 * Verifie que le plateau est soluble
 	 * @return
@@ -210,7 +245,7 @@ public class Plateau {
 		}
 		return ((nbVide%2)==(nbPermutations%2));
 	}
-	
+
 	//modelisation des deplacements
 	/**
 	 * calcule le nombre de deplacement possible suivant la position de la case vide (0)
@@ -227,7 +262,7 @@ public class Plateau {
 			return 4;
 		}
 	}
-	
+
 	/**
 	 * Effectue le delacement si possible et renvoie le boolean repondant a : le deplacement a ete effectue ?
 	 * @param s
@@ -357,8 +392,8 @@ public class Plateau {
 			return false;
 		}
 	}
-	
-	
+
+
 	public void deplace(String s){
 		Deplacement move = new Deplacement(s);
 		switch (this.getPosPl(0)){
@@ -464,3 +499,4 @@ public class Plateau {
 		}	
 	}
 }
+
