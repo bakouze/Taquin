@@ -262,6 +262,17 @@ public class Plateau {
 			return 4;
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	public boolean[] deplacementsPossibles(){
+		boolean[] tab = new boolean[4];
+		for(int i=0;i<tab.length;i++){
+			Deplacement deplacement = new Deplacement(i);
+			this.deplaceBool(deplacement.getString());
+		}
+	}
 
 	/**
 	 * Effectue le delacement si possible et renvoie le boolean repondant a : le deplacement a ete effectue ?
@@ -396,6 +407,7 @@ public class Plateau {
 
 	public void deplace(String s){
 		Deplacement move = new Deplacement(s);
+		this.profondeur++;
 		switch (this.getPosPl(0)){
 		case 0:
 			if(this.deplaceBool(s)){

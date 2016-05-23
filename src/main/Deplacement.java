@@ -21,8 +21,29 @@ public class Deplacement {
 		}
 	}
 	
+	public Deplacement(int a){
+		if(a>=0&&a<=3){
+			this.deplacement = a;
+		}
+	}
+	
 	public int getInt(){
 		return this.deplacement;
+	}
+	
+	public String getString(){
+		if(this.deplacement == 0){
+			return "h";
+		}
+		else if(this.deplacement == 1){
+			return "g";
+		}
+		else if(this.deplacement == 2){
+			return "d";
+		}
+		else if(this.deplacement == 3){
+			return "b";
+		}
 	}
 
 }
