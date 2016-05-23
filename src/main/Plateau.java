@@ -189,6 +189,10 @@ public class Plateau {
 		}
 		return temp;
 	}
+	
+	public int getF(){
+		return this.profondeur+this.manhattanDist();
+	}
 
 	//Test de faisabilite
 	/**
@@ -223,7 +227,7 @@ public class Plateau {
 	 * Verifie que si le plateau est resolu
 	 * @return
 	 */
-	private boolean estResolu(){
+	public boolean estResolu(){
 		boolean test = true;
 		for(int i=0;i<9;i++){
 			test = test && (this.plateau[i]==this.etatFinal[i]);

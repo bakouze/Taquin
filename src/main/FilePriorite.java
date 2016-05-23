@@ -19,7 +19,7 @@ public class FilePriorite {
 	}
 	
 	public Plateau getFirst(){
-		return this.listePlateau.getFirst();
+		return this.listePlateau.pollFirst();
 	}
 
 	public boolean isEmpty(){
