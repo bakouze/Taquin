@@ -252,11 +252,12 @@ public class Plateau {
 	 * @return
 	 */
 	public boolean estSoluble(){
-		int nbVide = this.manhattanDistI(0);
+		Plateau copie = new Plateau(this);
+		int nbVide = copie.manhattanDistI(0);
 		int nbPermutations = 0;
 		int compteur = 1;
-		while(!this.estResolu()){
-			nbPermutations += this.placement(compteur);
+		while(!copie.estResolu()){
+			nbPermutations += copie.placement(compteur);
 			compteur++;
 		}
 		return ((nbVide%2)==(nbPermutations%2));
