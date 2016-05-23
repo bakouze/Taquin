@@ -23,9 +23,11 @@ public class Probleme {
 				Deplacement move = new Deplacement(i);
 				copie.deplace(move.getString());
 				if(this.tabPositions.isIn(copie)){
-					this.filePriorite.add(copie);
+					this.filePriorite.addPlateau(copie);
 				}
 			}
 		}
 	}
+	
+	
 }

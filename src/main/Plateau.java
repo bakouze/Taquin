@@ -272,6 +272,7 @@ public class Plateau {
 			Deplacement deplacement = new Deplacement(i);
 			this.deplaceBool(deplacement.getString());
 		}
+		return tab;
 	}
 
 	/**
@@ -516,6 +517,7 @@ public class Plateau {
 		for (int i=0; i<this.plateau.length; i++){
 			somme += this.plateau[i]*Math.pow(10, i);
 		}
+		return somme;
 	}
 }
 

@@ -9,7 +9,7 @@ public class TabPositions {
 	
 	//Constructeur
 	public TabPositions(){
-		this.ht = new HashTable();
+		this.ht = new Hashtable<Integer, Integer>();
 	}
 	
 	public void addPositions(Plateau plateau){
@@ -19,6 +19,6 @@ public class TabPositions {
 	public boolean isIn(Plateau plateau){
 		int somme = plateau.hashSomme();
 		int value = ht.get(somme);
-		return (plateau.getProfondeur < value);
+		return (plateau.getProfondeur() < value);
 	}
 }

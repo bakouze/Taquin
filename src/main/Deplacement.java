@@ -41,7 +41,7 @@ public class Deplacement {
 		else if(this.deplacement == 2){
 			return "d";
 		}
-		else if(this.deplacement == 3){
+		else  {
 			return "b";
 		}
 	}
