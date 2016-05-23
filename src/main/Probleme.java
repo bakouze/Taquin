@@ -6,6 +6,7 @@ public class Probleme {
 	private FilePriorite filePriorite;
 	private TabPositions tabPositions;
 	private int borneSup;
+	private Plateau solution;
 
 	//Constructeur
 	public Probleme(Plateau plateau){
@@ -14,7 +15,8 @@ public class Probleme {
 			this.filePriorite.addPlateau(plateau);
 			this.tabPositions=new TabPositions();
 			this.tabPositions.addPositions(plateau);
-			this.borneSup=500;		
+			this.borneSup=500;
+			this.solution=new Plateau();
 		} else {
 			System.out.println("erreur de faisabilite");
 		}
@@ -37,17 +39,19 @@ public class Probleme {
 		}
 	}
 	
-	public Plateau solve(){
-		Plateau solution = new Plateau();
+	public void solve(){
 		while(!this.filePriorite.isEmpty()){
 			Plateau current = this.filePriorite.getFirst();
 			if (current.estResolu()){
-				solution = current;
+				this.solution = current;
 				this.borneSup = current.getF();
 			} else if (current.getF() <= this.borneSup){
 				this.creationFils();				
 			}
 		}
-		return solution;
+	}
+	
+	public Plateau getSolution(){
+		return this.solution;
 	}
 }

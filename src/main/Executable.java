@@ -11,6 +11,10 @@ public class Executable {
 		Plateau p = new Plateau(rd.getPlateau(),rd.getSolution());
 		System.out.println(p.manhattanDist());
 		System.out.println(p.estSoluble());
+		Probleme probleme = new Probleme(p);
+		probleme.solve();
+		System.out.println(probleme.getSolution().deplacementsEffectues());
+		System.out.println(probleme.getSolution().getProfondeur());
 	}
 
 }

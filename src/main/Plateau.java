@@ -1,4 +1,8 @@
 package main;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * Représentation du plateau du jeu de taquin
  * @author guillaume
@@ -25,6 +29,11 @@ public class Plateau {
 	 * nombre de coups utilis�s pour atteindre ce plateau
 	 */
 	private int profondeur;
+	
+	/**
+	 * liste des mouvements effectues
+	 */
+	private LinkedList<String> listeDeplacements;
 
 	/**
 	 * Constructeur par défaut : construit un plateau de taquin résolu
@@ -36,6 +45,7 @@ public class Plateau {
 		}
 		this.plateau = pl;
 		this.etatFinal = pl;
+		this.listeDeplacements=new LinkedList<String>();
 		int[][] d = {{0,1,2,1,2,3,2,3,4},
 				{1,0,1,2,1,2,3,2,3},
 				{2,1,0,3,2,1,4,3,2},
@@ -62,12 +72,14 @@ public class Plateau {
 		this.plateau = plateau.getPosition();
 		this.etatFinal = plateau.getPosFinale();
 		this.profondeur = plateau.getProfondeur();
+		this.listeDeplacements=new LinkedList<String>();
 	}
 
 	/**
 	 * Constructeur à base de deux tableaux de 9 entiers
 	 */
 	public Plateau(int[] pl, int[] sol){
+		this.listeDeplacements=new LinkedList<String>();
 		boolean test = true;
 		for(int j=0;j<9;j++){
 			int temp = pl[j];
@@ -267,6 +279,8 @@ public class Plateau {
 		}
 	}
 	
+	
+	
 	/**
 	 * 
 	 */
@@ -411,6 +425,7 @@ public class Plateau {
 
 
 	public void deplace(String s){
+		this.listeDeplacements.add(s);
 		Deplacement move = new Deplacement(s);
 		this.profondeur++;
 		switch (this.getPosPl(0)){
@@ -522,6 +537,15 @@ public class Plateau {
 			somme += this.plateau[i]*Math.pow(10, i);
 		}
 		return somme;
+	}
+	
+	public String deplacementsEffectues(){
+		String sol = "";
+		Iterator<String> iter = this.listeDeplacements.iterator();
+		while(iter.hasNext()){
+			sol += iter.next();
+		}
+		return sol;
 	}
 }
 
