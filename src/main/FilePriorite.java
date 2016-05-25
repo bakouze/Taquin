@@ -12,6 +12,7 @@ public class FilePriorite {
 		this.listePlateau = new LinkedList<Plateau>();
 	}
 	
+	
 	public void addPlateau(Plateau plateau){
 		Plateau copie = new Plateau();
 		copie = new Plateau(plateau);
