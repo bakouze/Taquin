@@ -35,6 +35,8 @@ public class Plateau {
 	 */
 	private LinkedList<String> listeDeplacements;
 
+	private int n;
+
 	/**
 	 * Constructeur par défaut : construit un plateau de taquin résolu
 	 */
@@ -60,36 +62,26 @@ public class Plateau {
 
 	@SuppressWarnings("unchecked")
 	public Plateau(Plateau plateau){
-		int[][] d = {{0,1,2,1,2,3,2,3,4},
-				{1,0,1,2,1,2,3,2,3},
-				{2,1,0,3,2,1,4,3,2},
-				{1,2,3,0,1,2,1,2,3},
-				{2,1,2,1,0,1,2,1,2},
-				{3,2,1,2,1,0,3,2,1},
-				{2,3,4,1,2,3,0,1,2},
-				{3,2,3,2,1,2,1,0,1},
-				{4,3,2,3,2,1,2,1,0}};
-		this.dist = d;
+		this.dist = plateau.dist;
+		this.n=plateau.n;
 		this.plateau = plateau.getPosition().clone();
 		this.etatFinal = plateau.getPosFinale().clone();
 		this.profondeur = plateau.getProfondeur();
 		this.listeDeplacements=(LinkedList<String>) plateau.listeDeplacements.clone();
 	}
-
-	/**
-	 * Constructeur à base de deux tableaux de 9 entiers
-	 */
-	public Plateau(int[] pl, int[] sol){
+	
+	public Plateau (int n, int[] pl, int[] sol){
+		this.n=n;
 		this.listeDeplacements=new LinkedList<String>();
 		boolean test = true;
-		for(int j=0;j<9;j++){
+		for(int j=0;j<n*n;j++){
 			int temp = pl[j];
 			int tempSol = sol[j];
-			if(temp<0||temp>8||tempSol<0||tempSol>8){
+			if(temp<0||temp>n*n-1||tempSol<0||tempSol>n*n-1){
 				test= false;
 				System.out.println("out of bound");
 			}
-			for(int t=j+1;t<9;t++){
+			for(int t=j+1;t<n*n;t++){
 				int temp2 = pl[t];
 				int temp2Sol = sol[t];
 				if(temp == temp2||tempSol == temp2Sol){
@@ -100,15 +92,12 @@ public class Plateau {
 		if(test){
 			this.plateau = pl;
 			this.etatFinal = sol;
-			int[][] d = {{0,1,2,1,2,3,2,3,4},
-					{1,0,1,2,1,2,3,2,3},
-					{2,1,0,3,2,1,4,3,2},
-					{1,2,3,0,1,2,1,2,3},
-					{2,1,2,1,0,1,2,1,2},
-					{3,2,1,2,1,0,3,2,1},
-					{2,3,4,1,2,3,0,1,2},
-					{3,2,3,2,1,2,1,0,1},
-					{4,3,2,3,2,1,2,1,0}};
+			int[][] d = new int[n*n][n*n];
+			for (int i = 0; i < n*n; i++){
+				for (int j = 0; j < n*n; j++){
+					d[i][j] = Math.abs(j/n-i/n)+Math.abs(j%n-i%n);
+				}
+			}
 			this.dist = d;
 		}
 		else{
@@ -117,12 +106,53 @@ public class Plateau {
 	}
 
 	/**
+	 * Constructeur à base de deux tableaux de 9 entiers
+	 */
+//	public Plateau(int n, int[] pl, int[] sol){
+//		this.listeDeplacements=new LinkedList<String>();
+//		this.n=n;
+//		boolean test = true;
+//		for(int j=0;j<9;j++){
+//			int temp = pl[j];
+//			int tempSol = sol[j];
+//			if(temp<0||temp>8||tempSol<0||tempSol>8){
+//				test= false;
+//				System.out.println("out of bound");
+//			}
+//			for(int t=j+1;t<9;t++){
+//				int temp2 = pl[t];
+//				int temp2Sol = sol[t];
+//				if(temp == temp2||tempSol == temp2Sol){
+//					test = false;
+//				}
+//			}
+//		}
+//		if(test){
+//			this.plateau = pl;
+//			this.etatFinal = sol;
+//			int[][] d = {{0,1,2,1,2,3,2,3,4},
+//					{1,0,1,2,1,2,3,2,3},
+//					{2,1,0,3,2,1,4,3,2},
+//					{1,2,3,0,1,2,1,2,3},
+//					{2,1,2,1,0,1,2,1,2},
+//					{3,2,1,2,1,0,3,2,1},
+//					{2,3,4,1,2,3,0,1,2},
+//					{3,2,3,2,1,2,1,0,1},
+//					{4,3,2,3,2,1,2,1,0}};
+//			this.dist = d;
+//		}
+//		else{
+//			System.out.println("erreur chiffres !");
+//		}
+//	}
+
+	/**
 	 * Transforme une position int[9] en int unique
 	 * @return
 	 */
 	public int intFromPosition(){
 		int res = 0;
-		for (int i = 0; i < 9; i++){
+		for (int i = 0; i < n*n; i++){
 			res += this.getPosition()[i]*Math.pow(10, i);
 		}
 		return res;
@@ -156,7 +186,7 @@ public class Plateau {
 	 * @return
 	 */
 	private int getPosPl(int a){
-		for(int i=0;i<9;i++){
+		for(int i=0;i<n*n;i++){
 			if(a==this.plateau[i]){
 				return i;
 			}
@@ -171,7 +201,7 @@ public class Plateau {
 	 * @return
 	 */
 	private int getPosSol(int a){
-		for(int i=0;i<9;i++){
+		for(int i=0;i<n*n;i++){
 			if(a==this.etatFinal[i]){
 				return i;
 			}
@@ -197,7 +227,7 @@ public class Plateau {
 	 */
 	public int manhattanDist(){
 		int temp = 0;
-		for(int i = 1;i<9;i++){
+		for(int i = 1;i<n*n;i++){
 			temp += this.manhattanDistI(i);
 		}
 		return temp;
@@ -242,7 +272,7 @@ public class Plateau {
 	 */
 	public boolean estResolu(){
 		boolean test = true;
-		for(int i=0;i<9;i++){
+		for(int i=0;i<n*n;i++){
 			test = test && (this.plateau[i]==this.etatFinal[i]);
 		}
 		return test;
@@ -294,6 +324,55 @@ public class Plateau {
 		}
 		return tab;
 	}
+
+	public boolean[] deplacementsPossiblesBis(){
+		boolean[] tab = new boolean[4];
+		int pos0 = this.getPosPl(0);
+		for (int i=0; i<4; i++){
+			//ligne haut
+			if (pos0/this.n==0){
+				tab[0]=false;
+			} else {
+				tab[0]=true;
+			}
+			//colonne gauche
+			if (pos0%this.n==0){
+				tab[1]=false;
+			} else {
+				tab[1]=true;
+			}
+			//colonne droite
+			if (pos0%this.n==this.n-1){
+				tab[2]=false;
+			} else {
+				tab[2]=true;
+			}
+			//ligne bas
+			if (pos0/this.n==this.n-1){
+				tab[3]=false;
+			} else {
+				tab[3]=true;
+			}
+		}
+		return tab;	
+	}
+
+	public void deplaceBis(String s){
+		this.listeDeplacements.add(s);
+		Deplacement move = new Deplacement(s);
+		this.profondeur++;
+		int pos0 = this.getPosPl(0);
+		if (move.getInt()==0){
+			this.permutation(pos0, pos0-this.n);
+		} else if (move.getInt()==1){
+			this.permutation(pos0, pos0-1);
+		} else if (move.getInt()==2){
+			this.permutation(pos0, pos0+1);
+		} else {
+			this.permutation(pos0, pos0+this.n);
+		}
+	}
+
 
 	/**
 	 * Effectue le delacement si possible et renvoie le boolean repondant a : le deplacement a ete effectue ?
@@ -549,8 +628,8 @@ public class Plateau {
 		}	
 	}
 
-	public int hashSomme(){
-		int somme = 0;
+	public long hashSomme(){
+		long somme = 0;
 		for (int i=0; i<this.plateau.length; i++){
 			somme += this.plateau[i]*Math.pow(10, this.plateau.length-1-i);
 		}

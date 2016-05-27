@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -34,26 +35,24 @@ public class Reader {
 	public Reader(String fileName) throws FileNotFoundException{
 		//file reading
 		Scanner sc = new Scanner(new File(fileName));
-	    int[] temp = new int[19];
-	    int i = 0;
+	    LinkedList<Integer> temp = new LinkedList<Integer>();
 	    while (sc.hasNextInt()) {
 	    	int a = sc.nextInt();
-	    	temp[i]=a;
-	    	i++;
+	    	temp.add(a);
 	    }
 	    sc.close();
 	    //nb attribution
-	    this.nb = temp[0];
+	    this.nb = temp.pollFirst();
 	    //pl attribution
-	    int[] p = new int[9];
-	    for(int j = 1;j<10;j++){
-	    	p[j-1]=temp[j];
+	    int[] p = new int[this.nb*this.nb];
+	    for(int j = 0;j<this.nb*this.nb;j++){
+	    	p[j] = temp.pollFirst();
 	    }
 	    this.pl = p;
 	    //sol attribution
-	    int[] s = new int[9];
-	    for(int j = 10;j<19;j++){
-	    	s[j-10]=temp[j];
+	    int[] s = new int[this.nb*this.nb];
+	    for(int j = 0;j<this.nb*this.nb;j++){
+	    	s[j]=temp.pollFirst();
 	    }
 	    this.sol=s; 
 	}

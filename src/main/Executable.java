@@ -7,8 +7,8 @@ public class Executable {
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		
-		Reader rd = new Reader("InputFiles/sp001.txt");
-		Plateau p = new Plateau(rd.getPlateau(),rd.getSolution());
+		Reader rd = new Reader("InputFiles/sp000.txt");
+		Plateau p = new Plateau(rd.getNb(), rd.getPlateau(),rd.getSolution());
 		System.out.println(p.manhattanDist());
 		System.out.println(p.estSoluble());
 		Probleme probleme = new Probleme(p);

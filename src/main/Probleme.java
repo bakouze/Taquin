@@ -24,12 +24,14 @@ public class Probleme {
 	
 	public void creationFils(Plateau plateau){
 		if (plateau.getF() <= this.borneSup){
-			boolean[] deplacementsPossibles = plateau.deplacementsPossibles();
+			//boolean[] deplacementsPossibles = plateau.deplacementsPossibles();
+			boolean[] deplacementsPossibles = plateau.deplacementsPossiblesBis();
 			for(int i=0;i<deplacementsPossibles.length;i++){
 				if(deplacementsPossibles[i]){
 					Plateau copie = new Plateau(plateau);
 					Deplacement move = new Deplacement(i);
-					copie.deplace(move.getString());
+					//copie.deplace(move.getString());
+					copie.deplaceBis(move.getString());
 					if(this.tabPositions.isIn(copie)){
 						this.filePriorite.addPlateau(copie);
 					}
