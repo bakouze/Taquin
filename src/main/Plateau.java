@@ -628,10 +628,10 @@ public class Plateau {
 		}	
 	}
 
-	public long hashSomme(){
-		long somme = 0;
+	public String hashSomme(){
+		String somme = "-";
 		for (int i=0; i<this.plateau.length; i++){
-			somme += this.plateau[i]*Math.pow(10, this.plateau.length-1-i);
+			somme += this.plateau[i]+"-";
 		}
 		return somme;
 	}

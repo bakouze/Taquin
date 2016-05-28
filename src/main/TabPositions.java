@@ -5,11 +5,11 @@ import java.util.Hashtable;
 public class TabPositions {
 
 	//Attributs
-	Hashtable<Long, Integer> ht;
+	Hashtable<String, Integer> ht;
 	
 	//Constructeur
 	public TabPositions(){
-		this.ht = new Hashtable<Long, Integer>();
+		this.ht = new Hashtable<String, Integer>();
 	}
 	
 	public void addPositions(Plateau plateau){
@@ -18,9 +18,9 @@ public class TabPositions {
 	
 	public boolean isIn(Plateau plateau){
 		boolean b = true;
-		long somme = plateau.hashSomme();
+		String somme = plateau.hashSomme();
 		if (ht.containsKey(somme)){
-			long value = ht.get(somme);
+			int value = ht.get(somme);
 			b = b && plateau.getProfondeur() < value;
 		}
 		return b;
