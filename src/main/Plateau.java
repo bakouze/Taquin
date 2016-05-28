@@ -69,7 +69,7 @@ public class Plateau {
 		this.profondeur = plateau.getProfondeur();
 		this.listeDeplacements=(LinkedList<String>) plateau.listeDeplacements.clone();
 	}
-	
+
 	public Plateau (int n, int[] pl, int[] sol){
 		this.n=n;
 		this.listeDeplacements=new LinkedList<String>();
@@ -108,43 +108,43 @@ public class Plateau {
 	/**
 	 * Constructeur à base de deux tableaux de 9 entiers
 	 */
-//	public Plateau(int n, int[] pl, int[] sol){
-//		this.listeDeplacements=new LinkedList<String>();
-//		this.n=n;
-//		boolean test = true;
-//		for(int j=0;j<9;j++){
-//			int temp = pl[j];
-//			int tempSol = sol[j];
-//			if(temp<0||temp>8||tempSol<0||tempSol>8){
-//				test= false;
-//				System.out.println("out of bound");
-//			}
-//			for(int t=j+1;t<9;t++){
-//				int temp2 = pl[t];
-//				int temp2Sol = sol[t];
-//				if(temp == temp2||tempSol == temp2Sol){
-//					test = false;
-//				}
-//			}
-//		}
-//		if(test){
-//			this.plateau = pl;
-//			this.etatFinal = sol;
-//			int[][] d = {{0,1,2,1,2,3,2,3,4},
-//					{1,0,1,2,1,2,3,2,3},
-//					{2,1,0,3,2,1,4,3,2},
-//					{1,2,3,0,1,2,1,2,3},
-//					{2,1,2,1,0,1,2,1,2},
-//					{3,2,1,2,1,0,3,2,1},
-//					{2,3,4,1,2,3,0,1,2},
-//					{3,2,3,2,1,2,1,0,1},
-//					{4,3,2,3,2,1,2,1,0}};
-//			this.dist = d;
-//		}
-//		else{
-//			System.out.println("erreur chiffres !");
-//		}
-//	}
+	//	public Plateau(int n, int[] pl, int[] sol){
+	//		this.listeDeplacements=new LinkedList<String>();
+	//		this.n=n;
+	//		boolean test = true;
+	//		for(int j=0;j<9;j++){
+	//			int temp = pl[j];
+	//			int tempSol = sol[j];
+	//			if(temp<0||temp>8||tempSol<0||tempSol>8){
+	//				test= false;
+	//				System.out.println("out of bound");
+	//			}
+	//			for(int t=j+1;t<9;t++){
+	//				int temp2 = pl[t];
+	//				int temp2Sol = sol[t];
+	//				if(temp == temp2||tempSol == temp2Sol){
+	//					test = false;
+	//				}
+	//			}
+	//		}
+	//		if(test){
+	//			this.plateau = pl;
+	//			this.etatFinal = sol;
+	//			int[][] d = {{0,1,2,1,2,3,2,3,4},
+	//					{1,0,1,2,1,2,3,2,3},
+	//					{2,1,0,3,2,1,4,3,2},
+	//					{1,2,3,0,1,2,1,2,3},
+	//					{2,1,2,1,0,1,2,1,2},
+	//					{3,2,1,2,1,0,3,2,1},
+	//					{2,3,4,1,2,3,0,1,2},
+	//					{3,2,3,2,1,2,1,0,1},
+	//					{4,3,2,3,2,1,2,1,0}};
+	//			this.dist = d;
+	//		}
+	//		else{
+	//			System.out.println("erreur chiffres !");
+	//		}
+	//	}
 
 	/**
 	 * Transforme une position int[9] en int unique
@@ -644,5 +644,16 @@ public class Plateau {
 		}
 		return sol;
 	}
+
+	public void afficher() {
+		for (int j=0; j<n; j++){
+			for (int i=0; i<n; i++){				
+				System.out.print(this.plateau[i+j*n]+" ");
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+	}
 }
+
 

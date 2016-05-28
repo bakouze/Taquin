@@ -43,6 +43,7 @@ public class Probleme {
 	public void solve(){
 		while(!this.filePriorite.isEmpty()){
 			Plateau current = this.filePriorite.getFirst();
+			//current.afficher();
 			this.tabPositions.addPositions(current);
 			if (current.estResolu()){
 				this.solution = current;
