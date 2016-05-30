@@ -74,7 +74,7 @@ public class Probleme {
 				this.solution = current;
 				this.borneSup = current.getF();
 			} else if (current.getF() <= this.borneSup){
-				System.out.println(this.borneSup);
+				//System.out.println(this.borneSup);
 				this.creationFils(current);				
 			}
 		}
