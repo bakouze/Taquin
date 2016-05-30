@@ -3,12 +3,28 @@ package main;
 public class Probleme {
 	
 	//Attributs
+	/**
+	 * attribut 1 : file de priorite
+	 */
 	private FilePriorite filePriorite;
+	/**
+	 * attribut 2 : tabkeau de position
+	 */
 	private TabPositions tabPositions;
+	/**
+	 * Attribut 3 : borne sup
+	 */
 	private int borneSup;
+	/**
+	 * Attribut 4 : borne inf
+	 */
 	private Plateau solution;
 
 	//Constructeur
+	/**
+	 * Constructeur a partir d'un plateau inital
+	 * @param plateau
+	 */
 	public Probleme(Plateau plateau){
 		if (plateau.estSoluble()){
 			this.filePriorite=new FilePriorite();
@@ -22,16 +38,20 @@ public class Probleme {
 		}
 	}
 	
+	/**
+	 * Fonction de creation des fils à partir des deplacements possibles et stockage de ces fils dans la file de priorite
+	 * @param plateau
+	 */
 	public void creationFils(Plateau plateau){
 		if (plateau.getF() <= this.borneSup){
 			//boolean[] deplacementsPossibles = plateau.deplacementsPossibles();
-			boolean[] deplacementsPossibles = plateau.deplacementsPossiblesBis();
+			boolean[] deplacementsPossibles = plateau.deplacementsPossibles();
 			for(int i=0;i<deplacementsPossibles.length;i++){
 				if(deplacementsPossibles[i]){
 					Plateau copie = new Plateau(plateau);
 					Deplacement move = new Deplacement(i);
 					//copie.deplace(move.getString());
-					copie.deplaceBis(move.getString());
+					copie.deplace(move.getString());
 					if(this.tabPositions.isIn(copie)){
 						this.filePriorite.addPlateau(copie);
 					}
@@ -40,6 +60,9 @@ public class Probleme {
 		}
 	}
 	
+	/**
+	 * fonction de resolution du probleme
+	 */
 	public void solve(){
 		while(!this.filePriorite.isEmpty()){
 			Plateau current = this.filePriorite.getFirst();
@@ -54,6 +77,10 @@ public class Probleme {
 		}
 	}
 	
+	/**
+	 * Fonction donnant le plateau correspondant a la resolution
+	 * @return
+	 */
 	public Plateau getSolution(){
 		return this.solution;
 	}

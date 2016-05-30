@@ -1,8 +1,19 @@
 package main;
 
 public class Deplacement {
+	/**
+	 * attribut de la classe deplacement :
+	 * 0 = haut
+	 * 1 = gauche
+	 * 2 = droite
+	 * 3 = bas
+	 */
 	private int deplacement;
 	
+	/**
+	 * Constructeur de la classe à partir d'un string
+	 * @param a
+	 */
 	public Deplacement(String a){
 		if(a.equalsIgnoreCase("h")){
 			this.deplacement = 0;
@@ -21,16 +32,28 @@ public class Deplacement {
 		}
 	}
 	
+	/**
+	 * Constructeur à partir d'un integer
+	 * @param a
+	 */
 	public Deplacement(int a){
 		if(a>=0&&a<=3){
 			this.deplacement = a;
 		}
 	}
 	
+	/**
+	 * getter de l'attribut int
+	 * @return
+	 */
 	public int getInt(){
 		return this.deplacement;
 	}
 	
+	/**
+	 * getter de la string associee
+	 * @return
+	 */
 	public String getString(){
 		if(this.deplacement == 0){
 			return "h";
