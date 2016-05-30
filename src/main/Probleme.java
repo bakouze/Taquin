@@ -16,7 +16,7 @@ public class Probleme {
 	 */
 	private int borneSup;
 	/**
-	 * Attribut 4 : borne inf
+	 * Attribut 4 : 
 	 */
 	private Plateau solution;
 
@@ -32,7 +32,7 @@ public class Probleme {
 			this.tabPositions=new TabPositions();
 			//this.tabPositions.addPositions(plateau);
 			this.borneSup=500;
-			this.solution=new Plateau();
+			this.solution=new Plateau(plateau.getN());
 		} else {
 			System.out.println("erreur de faisabilite");
 		}
@@ -51,9 +51,12 @@ public class Probleme {
 					Plateau copie = new Plateau(plateau);
 					Deplacement move = new Deplacement(i);
 					//copie.deplace(move.getString());
+					//copie.afficher();
 					copie.deplace(move.getString());
-					if(this.tabPositions.isIn(copie)){
+					//copie.afficher();
+					if(this.tabPositions.isNotIn(copie)){
 						this.filePriorite.addPlateau(copie);
+						this.tabPositions.addPositions(copie);
 					}
 				}
 			}			
@@ -67,7 +70,6 @@ public class Probleme {
 		while(!this.filePriorite.isEmpty()){
 			Plateau current = this.filePriorite.getFirst();
 			//current.afficher();
-			this.tabPositions.addPositions(current);
 			if (current.estResolu()){
 				this.solution = current;
 				this.borneSup = current.getF();

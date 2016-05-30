@@ -10,12 +10,15 @@ public class FilePriorite {
 	 */
 	private LinkedList<Plateau> listePlateau;
 	
+	private long maxSize;
+	
 	//Constructeur
 	/**
 	 * Constructeur vide
 	 */
 	public FilePriorite(){
 		this.listePlateau = new LinkedList<Plateau>();
+		this.maxSize = 0;
 	}
 	
 	/**
@@ -23,7 +26,7 @@ public class FilePriorite {
 	 * @param plateau
 	 */
 	public void addPlateau(Plateau plateau){
-		Plateau copie = new Plateau();
+		Plateau copie = new Plateau(plateau.getN());
 		copie = new Plateau(plateau);
 		listePlateau.add(copie);
 	}
@@ -33,6 +36,8 @@ public class FilePriorite {
 	 * @return
 	 */
 	public Plateau getFirst(){
+		this.maxSize = Math.max(maxSize, this.listePlateau.size());
+		System.out.println(this.maxSize);
 		return this.listePlateau.pollFirst();
 	}
 

@@ -13,17 +13,12 @@ public class Plateau {
 	/**
 	 * Attribut modélisant le plateau physique
 	 */
-	private int[] plateau;
+	private int[][] plateau;
 
 	/**
 	 * Attribut modelisant l'etat final attendu pour le plateau
 	 */
-	private int[] etatFinal;
-
-	/**
-	 * Attribut modelisant les distances de manhattan
-	 */
-	private int[][] dist;
+	private int[][] etatFinal;
 
 	/**
 	 * nombre de coups utilis�s pour atteindre ce plateau
@@ -35,29 +30,24 @@ public class Plateau {
 	 */
 	private LinkedList<String> listeDeplacements;
 
+	/**
+	 * entier stockant la taille du plateau
+	 */
 	private int n;
 
 	/**
 	 * Constructeur par défaut : construit un plateau de taquin résolu
 	 */
-	public Plateau(){
-		int[] pl = new int[9];
-		for(int i=0;i<9;i++){
-			pl[i]=i;
+	public Plateau(int n){
+		int[][] pl = new int[n][n];
+		for(int i=0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				pl[i][j]=i+n*j;
+			}
 		}
 		this.plateau = pl;
 		this.etatFinal = pl;
 		this.listeDeplacements=new LinkedList<String>();
-		int[][] d = {{0,1,2,1,2,3,2,3,4},
-				{1,0,1,2,1,2,3,2,3},
-				{2,1,0,3,2,1,4,3,2},
-				{1,2,3,0,1,2,1,2,3},
-				{2,1,2,1,0,1,2,1,2},
-				{3,2,1,2,1,0,3,2,1},
-				{2,3,4,1,2,3,0,1,2},
-				{3,2,3,2,1,2,1,0,1},
-				{4,3,2,3,2,1,2,1,0}};
-		this.dist = d;
 	}
 
 	/**
@@ -66,65 +56,34 @@ public class Plateau {
 	 */
 	@SuppressWarnings("unchecked")
 	public Plateau(Plateau plateau){
-		this.dist = plateau.dist;
 		this.n=plateau.n;
-		this.plateau = plateau.getPosition().clone();
-		this.etatFinal = plateau.getPosFinale().clone();
+		this.plateau = new int[n][n];
+		for(int i = 0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				this.plateau[i][j] = plateau.getPosition()[i][j];
+			}
+		}
+		this.etatFinal = new int[n][n];
+		for(int i = 0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				this.etatFinal[i][j] = plateau.getPosFinale()[i][j];
+			}
+		}
 		this.profondeur = plateau.getProfondeur();
 		this.listeDeplacements=(LinkedList<String>) plateau.listeDeplacements.clone();
 	}
 
 	/**
-	 * Constructeur à partir d'un entier n (le nombre de coup à obtenir), et de deux tableaux d'entiers (état initial et final du plateau)
+	 * Constructeur à partir d'un entier n (la taille du plateau), et de deux tableaux d'entiers (état initial et final du plateau)
 	 * @param n
 	 * @param pl
 	 * @param sol
 	 */
-	public Plateau (int n, int[] pl, int[] sol){
+	public Plateau (int n, int[][] pl, int[][] sol){
 		this.n=n;
 		this.listeDeplacements=new LinkedList<String>();
-		boolean test = true;
-		for(int j=0;j<n*n;j++){
-			int temp = pl[j];
-			int tempSol = sol[j];
-			if(temp<0||temp>n*n-1||tempSol<0||tempSol>n*n-1){
-				test= false;
-				System.out.println("out of bound");
-			}
-			for(int t=j+1;t<n*n;t++){
-				int temp2 = pl[t];
-				int temp2Sol = sol[t];
-				if(temp == temp2||tempSol == temp2Sol){
-					test = false;
-				}
-			}
-		}
-		if(test){
-			this.plateau = pl;
-			this.etatFinal = sol;
-			int[][] d = new int[n*n][n*n];
-			for (int i = 0; i < n*n; i++){
-				for (int j = 0; j < n*n; j++){
-					d[i][j] = Math.abs(j/n-i/n)+Math.abs(j%n-i%n);
-				}
-			}
-			this.dist = d;
-		}
-		else{
-			System.out.println("erreur chiffres !");
-		}
-	}
-
-	/**
-	 * Transforme une position int[9] en int unique
-	 * @return
-	 */
-	public int intFromPosition(){
-		int res = 0;
-		for (int i = 0; i < n*n; i++){
-			res += this.getPosition()[i]*Math.pow(10, i);
-		}
-		return res;
+		this.plateau = pl;
+		this.etatFinal = sol;
 	}
 
 	/**
@@ -138,15 +97,23 @@ public class Plateau {
 	 * getter pour la position actuelle du plateau
 	 * @return
 	 */
-	public int[] getPosition(){
+	public int[][] getPosition(){
 		return this.plateau;
 	}
 
 	/**
 	 * getter pour la position finale du plateau
 	 */
-	public int[] getPosFinale(){
+	public int[][] getPosFinale(){
 		return this.etatFinal;
+	}
+	
+	/**
+	 * getter pour la taille du plateau
+	 * @return
+	 */
+	public int getN(){
+		return this.n;
 	}
 
 	/**
@@ -154,14 +121,21 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	private int getPosPl(int a){
-		for(int i=0;i<n*n;i++){
-			if(a==this.plateau[i]){
-				return i;
+	private int[] getPosPl(int a){
+		int[] couple = new int[2];
+		for(int i=0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				if(a==this.plateau[i][j]){
+					couple[0]=i;
+					couple[1]=j;
+					return couple;
+				}
 			}
 		}
-		System.out.println("erreur getPos");
-		return -1;
+		System.out.println("erreur getPosPl");
+		couple[0]=-1;
+		couple[1]=-1;
+		return couple;
 	}
 
 	/**
@@ -169,25 +143,32 @@ public class Plateau {
 	 * @param a
 	 * @return
 	 */
-	private int getPosSol(int a){
-		for(int i=0;i<n*n;i++){
-			if(a==this.etatFinal[i]){
-				return i;
+	private int[] getPosSol(int a){
+		int[] couple = new int[2];
+		for(int i=0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				if(a==this.etatFinal[i][j]){
+					couple[0]=i;
+					couple[1]=j;
+					return couple;
+				}
 			}
 		}
-		System.out.println("erreur getPos");
-		return -1;
+		System.out.println("erreur getPosSol");
+		couple[0]=-1;
+		couple[1]=-1;
+		return couple;
 	}
 
 	/**
-	 * return the manhattan distance of the element a to the element b
+	 * return the manhattan distance of the element a (from actual place to final place)
 	 * @param a
 	 * @return
 	 */
 	private int manhattanDistI(int a){
-		int i = this.getPosPl(a);
-		int j = this.getPosSol(a);
-		return this.dist[j][i];
+		int[] ini = this.getPosPl(a);
+		int[] fin = this.getPosSol(a);
+		return Math.abs(ini[0]-fin[0])+Math.abs(ini[1]-fin[1]);
 	}
 
 	/**
@@ -212,14 +193,14 @@ public class Plateau {
 
 	//Test de faisabilite
 	/**
-	 * Echange les cases i et j du plateau
-	 * @param i
-	 * @param j
+	 * Echange les cases ini et sec du plateau
+	 * @param ini
+	 * @param sec
 	 */
-	private void permutation(int i, int j){
-		int temp = this.plateau[i];
-		this.plateau[i]=this.plateau[j];
-		this.plateau[j]=temp;
+	private void permutation(int[] ini, int[] sec){
+		int temp = this.plateau[ini[0]][ini[1]];
+		this.plateau[ini[0]][ini[1]]=this.plateau[sec[0]][sec[1]];
+		this.plateau[sec[0]][sec[1]]=temp;
 	}
 
 	/**
@@ -228,10 +209,10 @@ public class Plateau {
 	 * @return
 	 */
 	private int placement(int a){
-		if(this.getPosPl(a)!=this.getPosSol(a)){
-			int i = this.getPosPl(a);
-			int j = this.getPosSol(a);
-			this.permutation(i, j);
+		if((this.getPosPl(a)[0]!=this.getPosSol(a)[0])||(this.getPosPl(a)[1]!=this.getPosSol(a)[1])){
+			int[] ini = this.getPosPl(a);
+			int[] fin = this.getPosSol(a);
+			this.permutation(ini, fin);
 			return 1;
 		}
 		else{
@@ -245,8 +226,10 @@ public class Plateau {
 	 */
 	public boolean estResolu(){
 		boolean test = true;
-		for(int i=0;i<n*n;i++){
-			test = test && (this.plateau[i]==this.etatFinal[i]);
+		for(int i=0;i<n;i++){
+			for(int j = 0;j<n;j++){
+				test = test && (this.plateau[i][j]==this.etatFinal[i][j]);
+			}
 		}
 		return test;
 	}
@@ -273,28 +256,28 @@ public class Plateau {
 	 */
 	public boolean[] deplacementsPossibles(){
 		boolean[] tab = new boolean[4];
-		int pos0 = this.getPosPl(0);
+		int[] pos0 = this.getPosPl(0);
 		for (int i=0; i<4; i++){
 			//ligne haut
-			if (pos0/this.n==0){
+			if (pos0[1]==0){
 				tab[0]=false;
 			} else {
 				tab[0]=true;
 			}
 			//colonne gauche
-			if (pos0%this.n==0){
+			if (pos0[0]==0){
 				tab[1]=false;
 			} else {
 				tab[1]=true;
 			}
 			//colonne droite
-			if (pos0%this.n==this.n-1){
+			if (pos0[0]==this.n-1){
 				tab[2]=false;
 			} else {
 				tab[2]=true;
 			}
 			//ligne bas
-			if (pos0/this.n==this.n-1){
+			if (pos0[1]==this.n-1){
 				tab[3]=false;
 			} else {
 				tab[3]=true;
@@ -308,18 +291,25 @@ public class Plateau {
 	 * @param s
 	 */
 	public void deplace(String s){
-		this.listeDeplacements.add(s);
 		Deplacement move = new Deplacement(s);
+		this.listeDeplacements.add(s);
 		this.profondeur++;
-		int pos0 = this.getPosPl(0);
+		int[] pos0 = this.getPosPl(0);
+		int[] posFin = new int[2];
+		posFin[0] = pos0[0];
+		posFin[1] = pos0[1];
 		if (move.getInt()==0){
-			this.permutation(pos0, pos0-this.n);
+			posFin[1] -= 1;
+			this.permutation(pos0, posFin);
 		} else if (move.getInt()==1){
-			this.permutation(pos0, pos0-1);
+			posFin[0] -=1;
+			this.permutation(pos0, posFin);
 		} else if (move.getInt()==2){
-			this.permutation(pos0, pos0+1);
+			posFin[0] += 1;
+			this.permutation(pos0, posFin);
 		} else {
-			this.permutation(pos0, pos0+this.n);
+			posFin[1] += 1;
+			this.permutation(pos0, posFin);
 		}
 	}
 
@@ -330,9 +320,12 @@ public class Plateau {
 	 */
 	public String hashSomme(){
 		String somme = "-";
-		for (int i=0; i<this.plateau.length; i++){
-			somme += this.plateau[i]+"-";
+		for (int i=0; i<this.n; i++){
+			for(int j=0;j<this.n;j++){
+				somme += this.plateau[i][j]+"-";
+			}
 		}
+		//System.out.println(somme);
 		return somme;
 	}
 
@@ -355,7 +348,7 @@ public class Plateau {
 	public void afficher() {
 		for (int j=0; j<n; j++){
 			for (int i=0; i<n; i++){				
-				System.out.print(this.plateau[i+j*n]+" ");
+				System.out.print(this.plateau[i][j]+" ");
 			}
 			System.out.println("");
 		}

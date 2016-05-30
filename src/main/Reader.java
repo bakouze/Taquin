@@ -20,12 +20,12 @@ public class Reader {
 	/**
 	 * Chiffres du plateau de taquin
 	 */
-	private int[] pl;
+	private int[][] pl;
 	
 	/**
 	 * chiffre du verteur de solution
 	 */
-	private int[] sol;
+	private int[][] sol;
 	
 	/**
 	 * Constructeur
@@ -44,15 +44,19 @@ public class Reader {
 	    //nb attribution
 	    this.nb = temp.pollFirst();
 	    //pl attribution
-	    int[] p = new int[this.nb*this.nb];
-	    for(int j = 0;j<this.nb*this.nb;j++){
-	    	p[j] = temp.pollFirst();
+	    int[][] p = new int[this.nb][this.nb];
+	    for(int i = 0;i<this.nb;i++){
+	    	for(int j = 0;j<this.nb;j++){
+	    		p[j][i] = temp.pollFirst();
+	    	}
 	    }
 	    this.pl = p;
 	    //sol attribution
-	    int[] s = new int[this.nb*this.nb];
-	    for(int j = 0;j<this.nb*this.nb;j++){
-	    	s[j]=temp.pollFirst();
+	    int[][] s = new int[this.nb][this.nb];
+	    for(int i = 0;i<this.nb;i++){
+	    	for(int j = 0; j<this.nb; j++){
+	    		s[j][i]=temp.pollFirst();
+	    	}
 	    }
 	    this.sol=s; 
 	}
@@ -61,7 +65,7 @@ public class Reader {
 	 * Getter for pl attribute
 	 * @return
 	 */
-	public int[] getPlateau(){
+	public int[][] getPlateau(){
 		return this.pl;
 	}
 	
@@ -69,7 +73,7 @@ public class Reader {
 	 * Getter for sol attribute
 	 * @return
 	 */
-	public int[] getSolution(){
+	public int[][] getSolution(){
 		return this.sol;
 	}
 	

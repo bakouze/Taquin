@@ -31,7 +31,7 @@ public class TabPositions {
 	 * @param plateau
 	 * @return
 	 */
-	public boolean isIn(Plateau plateau){
+	public boolean isNotIn(Plateau plateau){
 		boolean b = true;
 		String somme = plateau.hashSomme();
 		if (ht.containsKey(somme)){
